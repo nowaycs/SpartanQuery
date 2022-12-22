@@ -1,4 +1,4 @@
-export {mapData, sortData, filterUniqueID, filterID, arrayfilteredIDtotalVolume, calculateTimeStamp};
+export {mapData, sortData, filterUniqueID, filterID, arrayfilteredIDtotalVolume, calculateTimeStamp, getIDdescription};
 
 const arrTotalVolumeFilteredbyID = 0;
 
@@ -80,7 +80,7 @@ function filterUniqueID(arrIDsorted){
 
 
 // search for ID in a data array and return a description
-export function getIDdescription(arrayIDdesc, searchID){
+function getIDdescription(arrayIDdesc, searchID){
   let returnedSearch = arrayIDdesc.find(element => element.ID === searchID); // Compare an ID with all elements of array that contains descriptions and return the first match
 
   if (typeof returnedSearch === "undefined" || returnedSearch === null) { // check if match is found, if not or undefined object then return empty array object

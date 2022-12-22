@@ -2,7 +2,7 @@
 import React from 'react';
 import {useEffect,useState} from 'react';
 import ReactDOM from 'react-dom/client';
-import { mapData, filterUniqueID, sortData, filterID, arrayfilteredIDtotalVolume, calculateTimeStamp } from './reactApp.js';
+import { mapData, filterUniqueID, sortData, filterID, arrayfilteredIDtotalVolume, calculateTimeStamp, getIDdescription } from './reactApp.js';
 import reportWebVitals from './reportWebVitals';
 import { ApolloClient, InMemoryCache, ApolloProvider, gql, useQuery } from '@apollo/client';
 import './styleSheet.css';
@@ -111,8 +111,7 @@ const queryMessage = gql`
 function DataFetchContainer(props){
  const dataResponse = useQuery(queryMessage);
  return ( // REACT FRAGMENT IS USED to return multiple elements. Fragments let you group a list of children without adding extra nodes to the DOM.
- <body className='dark-theme'>
-  <React.Fragment> 
+   <React.Fragment> 
   <div className='containercolumn'>
   <div className='top'>
     <h1 id="appName">SpartanQuery</h1>
@@ -125,7 +124,6 @@ function DataFetchContainer(props){
  </div>
  </div>
  </React.Fragment>
- </body>
  ); 
 }
 
@@ -138,8 +136,7 @@ let sortedIDarray = [];
 let dataIDvolFound = {};
 const [dataIDvolhook, setDataIDvol] = useState(0); // usestate hook to remember value after rerender
 const {data, loading} = datainput;
-let timespanDAT = 0;
-let constructedData = {};
+let returnedSearch = "";
 
   if (!loading){ // check if data is loaded
   mapDataFetch = mapData(data);
@@ -149,6 +146,9 @@ let constructedData = {};
   function HandleClickEvent(e){
    dataIDvolFound = filterID(document.getElementById("dropdownIDs").value, mapDataFetch.arrID, mapDataFetch.arrvolUSD);
    dataIDvolFound.timespanDAT = calculateTimeStamp(mapDataFetch.arrTimestamp);
+   returnedSearch = getIDdescription(arrIDdesc, document.getElementById("dropdownIDs").value);
+   dataIDvolFound.returnedSearch = returnedSearch.Descr;
+  //  console.log(returnedSearch);
    console.log(dataIDvolFound);
    setDataIDvol(dataIDvolFound);
 }
@@ -165,9 +165,10 @@ function PrintData({datainput}){
   return(
     <>
     <h1 id="dropboxData">Data from dropbox ID</h1>
-  <p id="datainputfield1">amount of transactions by ID = {datainput.amountFound}</p>
-  <p id="datainputfield2">amount of volume by ID in USD = {datainput.totalVolume}</p>
-  <p id="datainputfield2">Timespan in days = {datainput.timespanDAT}</p>
+    <p id="datainputfield1">ID description = {datainput.returnedSearch}</p>
+  <p id="datainputfield2">amount of transactions by ID = {datainput.amountFound}</p>
+  <p id="datainputfield3">amount of volume by ID in USD = {datainput.totalVolume}</p>
+  <p id="datainputfield4">Timespan in days = {datainput.timespanDAT}</p>
    </>
   );
 }
@@ -189,7 +190,7 @@ const {data, loading} = datainput;
   return(
     <>
       <h1 id="tableTitle">List of unique ID's sorted by volume</h1>
-    <table>{arrfilteredIDtotalVolumeSorted.map((x) =><tr><td>ID = {x.ID}</td> <td>Volume = {x.volume} USD</td> <td>Description = {x.descr}</td></tr>)}</table>
+    <table><tbody>{arrfilteredIDtotalVolumeSorted.map((x) =><tr key={x.ID}><td>ID = {x.ID}</td><td>Volume = {x.volume} USD</td><td>Description = {x.descr}</td></tr>)}</tbody></table>
     </>
   );
  
