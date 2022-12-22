@@ -1,0 +1,64 @@
+    body.dark-theme {
+    background-color: #1c1c2a;
+    color: #e2e2e2;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    }
+
+    th,
+    td {
+    border: 1px solid white;
+    width: 500px;
+    overflow: hidden;
+    }
+
+    .containercolumn { /* flex container */
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    row-gap: 0px;
+    align-items: center;
+    }
+
+    .top {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    max-height: 100px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    }
+
+    .middle {
+    flex: 3;
+    min-height: 100px;
+    text-align: center;
+    align-items: center;
+    }
+
+    .bottom {
+    flex: 3;
+    min-height: 100px;
+    align-items: center;
+    text-align: left;
+    margin-bottom: 10px;
+    margin-top: 20px;
+                }
+
+    #tableTitle {
+    text-align: center;
+    font-size: 20px;
+    }
+
+    #appName {
+    font-size: 50px;
+    color: red;
+    }
+
+    #dropboxData{
+        font-size: 20px;
+    color: white;
+    }
